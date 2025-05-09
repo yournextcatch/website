@@ -40,12 +40,12 @@ export default function TripSearch() {
       <Container
         className="d-flex justify-content-center"
         style={{
-          //   backgroundImage: `url(${FishingBackgroundImg})`,
-          //   backgroundSize: "cover",
-          //   backgroundPosition: "center",
-          //   backgroundRepeat: "no-repeat",
-          //   backgroundAttachment: "fixed",
-          opacity: 0.85,
+          backgroundImage: `url(${FishingBackgroundImg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          opacity: 0.8,
           width: "100%",
           height: "100%",
           display: "flex",

@@ -1,25 +1,18 @@
 import { Container, Card, Col, Row } from "react-bootstrap";
 import HomepageImage from "../assets/images/fishing-homepage.jpg";
 import TripSearch from "../components/TripSearch/TripSearch";
+import HotBites from "../components/HotBites/HotBites";
 
 export default function HomePage() {
   return (
     <>
       <Container fluid>
         <Row>
-          <Col
-            style={{
-              backgroundImage: `url(${HomepageImage})`,
-              height: "85vh",
-              backgroundSize: "contain",
-              backgroundRepeat: "no-repeat",
-            }}
-            md={9}
-          >
+          <Col md={9} style={{ height: "85vh" }}>
             <TripSearch />
           </Col>
           <Col>
-            <h1>Hot Bites Here</h1>
+            <HotBites />
           </Col>
         </Row>
       </Container>
