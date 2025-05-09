@@ -8,7 +8,7 @@ export default function HomePage() {
       className="d-flex justify-content-center align-items-center"
       style={{
         backgroundImage: `url(${HomepageImage})`,
-        height: "100vh",
+        height: "85vh",
         backgroundSize: "cover",
         backgroundPosition: "center",
         width: "100vw",
