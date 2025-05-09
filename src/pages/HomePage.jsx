@@ -11,9 +11,8 @@ export default function HomePage() {
         height: "100vh",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "100vh",
         width: "100vw",
-        position: "fixed",
+        position: "absolute",
       }}
     >
       <Card
@@ -25,7 +24,6 @@ export default function HomePage() {
           height: "2.5rem",
           marginLeft: "auto",
           marginRight: "auto",
-          marginTop: "25%",
         }}
       >
         <h1>Coming Soon</h1>
