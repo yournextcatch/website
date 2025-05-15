@@ -8,6 +8,7 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
+import { ArrowDown, ArrowUp } from "react-bootstrap-icons";
 
 const cities = [
   "Long Beach",
@@ -63,6 +64,9 @@ const fishSpecies = [
 function AdvanceSearch() {
   const today = new Date().toISOString().split("T")[0];
 
+  const [advancedSearch, setAdvancedSearch] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+
   const [formData, setFormData] = useState({
     city: "",
     date: today,
@@ -107,6 +111,11 @@ function AdvanceSearch() {
       [field]: prev[field] > 0 ? prev[field] - 1 : 0,
     }));
   };
+
+  function handleAdvancedSearchToggle() {
+    setAdvancedSearch((prev) => !prev);
+    setShowAdvanced((prev) => !prev);
+  }
 
   return (
     <>
@@ -214,38 +223,59 @@ function AdvanceSearch() {
                     </Form.Group>
                   </Col>
                 </div>
-                <Form.Group className="mb-3">
-                  <Dropdown>
-                    <Dropdown.Toggle variant="warning" className="w-100">
-                      Fish Type
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="p-3 w-100">
-                      {Array.from(
-                        { length: Math.ceil(fishSpecies.length / 4) },
-                        (_, i) => (
-                          <div className="d-flex mb-2" key={i}>
-                            {fishSpecies
-                              .slice(i * 4, i * 4 + 4)
-                              .map((species, index) => (
-                                <div className="flex-fill me-2" key={index}>
-                                  <Form.Check
-                                    type="checkbox"
-                                    label={species}
-                                    value={species}
-                                    onChange={handleChange}
-                                    name="tripTypes"
-                                    checked={formData.tripTypes.includes(
-                                      species
-                                    )}
-                                  />
-                                </div>
-                              ))}
-                          </div>
-                        )
-                      )}
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </Form.Group>
+                {!showAdvanced ? (
+                  <Button
+                    variant="outline-secondary w-100"
+                    onClick={handleAdvancedSearchToggle}
+                    className="mb-3"
+                  >
+                    Advanced Search
+                    <ArrowDown className="m-1" />
+                  </Button>
+                ) : (
+                  <>
+                    <Form.Group className="mb-3">
+                      <Dropdown>
+                        <Dropdown.Toggle variant="warning" className="w-100">
+                          Fish Type
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu className="p-3 w-100">
+                          {Array.from(
+                            { length: Math.ceil(fishSpecies.length / 4) },
+                            (_, i) => (
+                              <div className="d-flex mb-2" key={i}>
+                                {fishSpecies
+                                  .slice(i * 4, i * 4 + 4)
+                                  .map((species, index) => (
+                                    <div className="flex-fill me-2" key={index}>
+                                      <Form.Check
+                                        type="checkbox"
+                                        label={species}
+                                        value={species}
+                                        onChange={handleChange}
+                                        name="tripTypes"
+                                        checked={formData.tripTypes.includes(
+                                          species
+                                        )}
+                                      />
+                                    </div>
+                                  ))}
+                              </div>
+                            )
+                          )}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </Form.Group>
+                    <Button
+                      variant="outline-secondary w-100"
+                      onClick={handleAdvancedSearchToggle}
+                      className="mb-3"
+                    >
+                      Hide Advanced Search
+                      <ArrowUp className="m-1" />
+                    </Button>
+                  </>
+                )}
                 <Button
                   className="w-100"
                   variant="primary"
