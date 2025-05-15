@@ -9,6 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { ArrowDown, ArrowUp } from "react-bootstrap-icons";
+import SearchBGImage from "../../assets/images/fishing-homepage.jpg";
 
 const cities = [
   "Long Beach",
@@ -59,6 +60,17 @@ const fishSpecies = [
   "Yellowtail Amberjack",
   "Yellowfin (Tuna)",
   "Tuna (Bigeye)",
+];
+
+const ammenities = [
+  "Toilet",
+  "Air Conditioning",
+  "Fighting Chair",
+  "Disabled Access",
+  "First Mate",
+  "You Keep Catch",
+  "Sleepers",
+  "Food & Drinks For Sale",
 ];
 
 function AdvanceSearch() {
@@ -122,7 +134,24 @@ function AdvanceSearch() {
       <Container className="mt-5">
         <Row>
           <Col>
-            <Card className="text-center p-3">
+            <Card
+              className="text-center p-3 bg-white"
+              style={{
+                backgroundImage: `url(${SearchBGImage})`,
+                backgroundSize: "cover",
+                height: "auto",
+                borderRadius: "10px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                backdropFilter: "blur(5px)",
+                color: "white",
+                padding: "20px",
+                margin: "0 auto",
+                maxWidth: "600px",
+                border: "none",
+                position: "relative",
+                zIndex: 1,
+              }}
+            >
               <Form>
                 <Form.Group className="mb-3">
                   <Form.Select
@@ -170,7 +199,7 @@ function AdvanceSearch() {
                     <Form.Group className="mb-3">
                       <Dropdown>
                         <Dropdown.Toggle
-                          variant="info"
+                          variant="success"
                           id="dropdown-basic"
                           className="w-100"
                         >
@@ -264,6 +293,41 @@ function AdvanceSearch() {
                             )
                           )}
                         </Dropdown.Menu>
+                      </Dropdown>
+                    </Form.Group>
+                    <Form.Group>
+                      <Dropdown className="w-100 mb-3">
+                        <Dropdown.Toggle className="w-100" variant="warning">
+                          Amenities
+                          <Dropdown.Menu className="p-3 w-100">
+                            {Array.from(
+                              { length: Math.ceil(ammenities.length / 4) },
+                              (_, i) => (
+                                <div className="d-flex mb-2" key={i}>
+                                  {ammenities
+                                    .slice(i * 4, i * 4 + 4)
+                                    .map((amenity, index) => (
+                                      <div
+                                        className="flex-fill me-2"
+                                        key={index}
+                                      >
+                                        <Form.Check
+                                          type="checkbox"
+                                          label={amenity}
+                                          value={amenity}
+                                          onChange={handleChange}
+                                          name="tripTypes"
+                                          checked={formData.tripTypes.includes(
+                                            amenity
+                                          )}
+                                        />
+                                      </div>
+                                    ))}
+                                </div>
+                              )
+                            )}
+                          </Dropdown.Menu>
+                        </Dropdown.Toggle>
                       </Dropdown>
                     </Form.Group>
                     <Button

@@ -2,6 +2,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import SimpleSearch from "../components/SimpleSearch/SimpleSearch";
 import HotBites from "../components/HotBites/HotBites";
 import AdvanceSearch from "../components/AdvanceSearch/AdvanceSearch";
+import Destinations from "../components/Destinations/Destinations";
 
 export default function HomePage() {
   return (
@@ -15,11 +16,21 @@ export default function HomePage() {
         </Row>
 
         {/* AdvanceSearch & HotBites side by side on md+ screens */}
-        <Row className="d-none d-md-flex">
-          <Col md={8}>
-            <AdvanceSearch />
+        <Row className="d-none d-md-flex" fluid>
+          <Col md={2}>
+            <div
+              style={{
+                height: "80vh",
+                width: "100%",
+                backgroundColor: "gray",
+              }}
+            ></div>
           </Col>
-          <Col md={4} className="mt-5 mt-md-0">
+          <Col md={7}>
+            <AdvanceSearch />
+            <Destinations />
+          </Col>
+          <Col md={3} className="mt-5 mt-md-0">
             <HotBites />
           </Col>
         </Row>
