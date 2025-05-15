@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Card, Container, Col, Row, Form, Button } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Dropdown,
+  Form,
+  Row,
+} from "react-bootstrap";
 
 const cities = [
   "Long Beach",
@@ -12,6 +20,46 @@ const cities = [
   "New York",
 ];
 
+const fishSpecies = [
+  "Albacore (Tuna)",
+  "Barracuda (Great)",
+  "Barracuda (Pacific)",
+  "Bass (Largemouth)",
+  "Bass (Striped)",
+  "Bass (Spotted)",
+  "Bluefin (Tuna)",
+  "Bonito",
+  "Calico Bass",
+  "California Sheephead",
+  "Cod",
+  "Crab",
+  "Dolphin (Mahi Mahi)",
+  "Halibut",
+  "Lingcod",
+  "Lobster",
+  "Marlin (Blue)",
+  "Marlin (Striped)",
+  "Ray",
+  "Rockfish",
+  "Sand Bass",
+  "Scorpionfish",
+  "Sculpin",
+  "Seabass (White)",
+  "Shark (Leopard)",
+  "Shark (Mako)",
+  "Shark (Thresher)",
+  "Sheepshead",
+  "Sierra Mackerel",
+  "Snapper (Red)",
+  "Snapper (Vermilion)",
+  "Swordfish",
+  "Triggerfish (Gray)",
+  "Tuna (Skipjack)",
+  "Yellowtail Amberjack",
+  "Yellowfin (Tuna)",
+  "Tuna (Bigeye)",
+];
+
 function AdvanceSearch() {
   const today = new Date().toISOString().split("T")[0];
 
@@ -19,6 +67,9 @@ function AdvanceSearch() {
     city: "",
     date: today,
     tripTypes: [],
+    adults: 0,
+    children: 0,
+    tripLength: "",
   });
 
   function handleChange(e) {
@@ -43,6 +94,20 @@ function AdvanceSearch() {
     console.log("Form submitted:", formData);
   };
 
+  const handleIncrement = (field) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: prev[field] + 1,
+    }));
+  };
+
+  const handleDecrement = (field) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: prev[field] > 0 ? prev[field] - 1 : 0,
+    }));
+  };
+
   return (
     <>
       <Container className="mt-5">
@@ -57,7 +122,7 @@ function AdvanceSearch() {
                     aria-label="Default select example"
                     value={formData.city}
                   >
-                    <option value="">Starting City</option>
+                    <option value="">Departing Port</option>
                     {cities.map((city, index) => (
                       <option key={index} value={city}>
                         {city}
@@ -73,6 +138,113 @@ function AdvanceSearch() {
                     onChange={handleChange}
                     required
                   />
+                </Form.Group>
+                <div className="d-flex flex-row mb-3">
+                  <Col col={2}>
+                    <Form.Group className="mb-3">
+                      <Form.Select
+                        onChange={handleChange}
+                        name="tripLength"
+                        value={formData.tripLength}
+                        required
+                      >
+                        <option value="">Trip Length</option>
+                        {["<1", 2, 3, 4, "5+"].map((trip, index) => (
+                          <option key={index} value={trip}>
+                            {trip}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
+                  </Col>
+                  <Col col={8}>
+                    <Form.Group className="mb-3">
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant="info"
+                          id="dropdown-basic"
+                          className="w-100"
+                        >
+                          {`${formData.adults} Adults, ${formData.children} Children`}
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu className="p-3 w-100">
+                          <div className="d-flex justify-content-between align-items-center mb-2">
+                            <span>Adults</span>
+                            <div className="d-flex align-items-center">
+                              <Button
+                                size="sm"
+                                variant="outline-secondary"
+                                onClick={() => handleDecrement("adults")}
+                              >
+                                −
+                              </Button>
+                              <span className="mx-2">{formData.adults}</span>
+                              <Button
+                                size="sm"
+                                variant="outline-secondary"
+                                onClick={() => handleIncrement("adults")}
+                              >
+                                +
+                              </Button>
+                            </div>
+                          </div>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <span>Children</span>
+                            <div className="d-flex align-items-center">
+                              <Button
+                                size="sm"
+                                variant="outline-secondary"
+                                onClick={() => handleDecrement("children")}
+                              >
+                                −
+                              </Button>
+                              <span className="mx-2">{formData.children}</span>
+                              <Button
+                                size="sm"
+                                variant="outline-secondary"
+                                onClick={() => handleIncrement("children")}
+                              >
+                                +
+                              </Button>
+                            </div>
+                          </div>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </Form.Group>
+                  </Col>
+                </div>
+                <Form.Group className="mb-3">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="warning" className="w-100">
+                      Fish Type
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="p-3 w-100">
+                      {Array.from(
+                        { length: Math.ceil(fishSpecies.length / 4) },
+                        (_, i) => (
+                          <div className="d-flex mb-2" key={i}>
+                            {fishSpecies
+                              .slice(i * 4, i * 4 + 4)
+                              .map((species, index) => (
+                                <div className="flex-fill me-2" key={index}>
+                                  <Form.Check
+                                    type="checkbox"
+                                    label={species}
+                                    value={species}
+                                    onChange={handleChange}
+                                    name="tripTypes"
+                                    checked={formData.tripTypes.includes(
+                                      species
+                                    )}
+                                  />
+                                </div>
+                              ))}
+                          </div>
+                        )
+                      )}
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </Form.Group>
                 <Button
                   className="w-100"
