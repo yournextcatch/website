@@ -5,9 +5,11 @@
 // import HomePage from "../pages/HomePage";
 // import AboutPage from "../pages/AboutPage";
 // import DestinationPage from "../pages/DestinationPage";
+// import AdminPage from "../pages/AdminPage";
 
 // import NavBar from "../components/NavBar/NavBar";
 // import Footer from "../components/Footer/Footer";
+// import ProtectedRoute from "../utilities/ProtectedRoute";
 
 // function App() {
 //   const auth = useAuth();
@@ -15,7 +17,8 @@
 //   const signOutRedirect = () => {
 //     const clientId = "7p43nqold1iummeoaem2vvbkt9";
 //     const logoutUri = window.location.origin;
-//     const cognitoDomain = "https://<your-user-pool-domain>"; // <-- Replace this
+//     const cognitoDomain =
+//       "https://yournextcatch.auth.us-west-1.amazoncognito.com";
 //     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
 //       logoutUri
 //     )}`;
@@ -45,6 +48,16 @@
 //             path="/destinations/:destinationName"
 //             element={<DestinationPage />}
 //           />
+
+//           {/* Protected Route Example */}
+//           <Route
+//             path="/admin"
+//             element={
+//               <ProtectedRoute>
+//                 <AdminPage />
+//               </ProtectedRoute>
+//             }
+//           />
 //         </Routes>
 //       </div>
 //       <Footer />
@@ -61,9 +74,11 @@ import "./App.css";
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
 import DestinationPage from "../pages/DestinationPage";
+import AdminPage from "../pages/AdminPage";
 
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
+import ProtectedRoute from "../utilities/ProtectedRoute";
 
 function App() {
   const auth = useAuth();
@@ -71,7 +86,9 @@ function App() {
   const signOutRedirect = () => {
     const clientId = "7p43nqold1iummeoaem2vvbkt9";
     const logoutUri = window.location.origin;
-    const cognitoDomain = "https://<your-user-pool-domain>"; // <-- Replace this
+    const cognitoDomain =
+      "https://yournextcatch.auth.us-west-1.amazoncognito.com";
+
     window.location.href = `${cognitoDomain}/logout?client_id=${clientId}&logout_uri=${encodeURIComponent(
       logoutUri
     )}`;
@@ -100,6 +117,16 @@ function App() {
           <Route
             path="/destinations/:destinationName"
             element={<DestinationPage />}
+          />
+
+          {/* Protected Route for Admin Group only */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requiredGroup="Admin">
+                <AdminPage />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </div>
