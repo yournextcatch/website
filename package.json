@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.13.1",
+    "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
@@ -27,7 +28,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"nodemon server.js\" \"react-scripts start\"",
+    "server": "nodemon server.js",
+    "client": "react scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

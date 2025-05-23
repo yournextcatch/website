@@ -1,6 +1,15 @@
 const HotBite = require("../models/HotBite");
 
-exports.index = async (req, res) => {
-  const hotBites = await HotBite.find({});
-  res.status(200).json(hotBites);
+module.exports = {
+  index,
 };
+
+async function index(req, res) {
+  try {
+    const hotBites = await HotBite.find({});
+    res.json(hotBites);
+  } catch (error) {
+    console.error("Error fetching hot bites:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
