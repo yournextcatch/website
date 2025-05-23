@@ -6,6 +6,7 @@ import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
 import DestinationPage from "../pages/DestinationPage";
 import AdminPage from "../pages/AdminPage";
+import EditHotBite from "../components/AdminComponents/EditHotBite";
 
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
@@ -56,6 +57,14 @@ function App() {
             element={
               <ProtectedRoute requiredGroup="Admin">
                 <AdminPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/hotbites/:id"
+            element={
+              <ProtectedRoute requiredGroup="Admin">
+                <EditHotBite />
               </ProtectedRoute>
             }
           />
